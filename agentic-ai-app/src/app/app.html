@@ -1,0 +1,93 @@
+<div class="container">
+  <header>
+    <h1>🤖 {{ title() }}</h1>
+    <p class="subtitle">An intelligent task management agent that automatically analyzes, prioritizes, and executes your tasks</p>
+  </header>
+
+  <div class="main-content">
+    <div class="input-section">
+      <h2>Add New Task</h2>
+      <div class="input-group">
+        <input 
+          type="text" 
+          [(ngModel)]="newTaskDescription"
+          (keyup.enter)="addTask()"
+          placeholder="Enter task description (try adding 'urgent' or 'important')"
+          class="task-input"
+          [disabled]="isAgentThinking()"
+        />
+        <button 
+          (click)="addTask()" 
+          class="add-button"
+          [disabled]="!newTaskDescription() || isAgentThinking()"
+        >
+          @if (isAgentThinking()) {
+            <span class="spinner"></span> Analyzing...
+          } @else {
+            Add Task
+          }
+        </button>
+      </div>
+      <p class="hint">💡 Tip: Include keywords like 'urgent', 'important', or 'asap' to influence priority</p>
+    </div>
+
+    <div class="tasks-section">
+      <h2>Tasks Queue</h2>
+      @if (tasks().length === 0) {
+        <div class="empty-state">
+          <p>No tasks yet. Add a task above to get started!</p>
+        </div>
+      } @else {
+        <div class="tasks-list">
+          @for (task of tasks(); track task.id) {
+            <div class="task-card" [class.completed]="task.status === 'completed'">
+              <div class="task-header">
+                <span class="task-id">#{{ task.id }}</span>
+                <span class="priority-badge" [style.background-color]="getPriorityColor(task.priority)">
+                  {{ task.priority }}
+                </span>
+                <span class="status-badge" [style.background-color]="getStatusColor(task.status)">
+                  {{ task.status }}
+                </span>
+              </div>
+              <div class="task-body">
+                <p class="task-description">{{ task.description }}</p>
+                <p class="task-time">Created: {{ task.createdAt | date:'short' }}</p>
+              </div>
+              <div class="task-actions">
+                @if (task.status === 'pending') {
+                  <button (click)="startTask(task.id)" class="action-button start">Start</button>
+                }
+                @if (task.status === 'in-progress') {
+                  <button (click)="completeTask(task.id)" class="action-button complete">Complete</button>
+                }
+                <button (click)="deleteTask(task.id)" class="action-button delete">Delete</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="agent-log-section">
+      <h2>Agent Activity Log</h2>
+      @if (agentActions().length === 0) {
+        <div class="empty-state">
+          <p>Agent activity will appear here...</p>
+        </div>
+      } @else {
+        <div class="log-list">
+          @for (action of agentActions(); track action.timestamp) {
+            <div class="log-entry">
+              <span class="log-time">{{ action.timestamp | date:'HH:mm:ss' }}</span>
+              <span class="log-action">{{ action.action }}</span>
+              @if (action.task) {
+                <span class="log-task-info">- "{{ action.task.description }}"</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
