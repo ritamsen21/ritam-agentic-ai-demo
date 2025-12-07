@@ -1,0 +1,76 @@
+<div class="card shadow-lg border-0">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0"><i class="bi bi-chat-dots-fill"></i> AI Agent Chat</h5>
+  </div>
+  
+  <div class="card-body p-0">
+    <div class="messages-container" #scrollContainer>
+      <div *ngIf="messages.length === 0" class="text-center text-muted p-5">
+        <div style="font-size: 4rem;">🦾</div>
+        <p class="mt-3">Start a conversation with the AI agent!</p>
+      </div>
+
+      <div *ngFor="let msg of messages" class="message-row p-3" [ngClass]="{'bg-light': msg.type === 'user'}">
+        <div class="d-flex" [ngClass]="{'flex-row-reverse': msg.type === 'user'}">
+          
+          <div class="avatar-circle" [ngClass]="{
+            'bg-primary': msg.type === 'user',
+            'bg-warning': msg.type === 'thought',
+            'bg-info': msg.type === 'action',
+            'bg-success': msg.type === 'response',
+            'bg-danger': msg.type === 'error'
+          }">
+            <i class="bi" [ngClass]="{
+              'bi-person-fill': msg.type === 'user',
+              'bi-lightbulb-fill': msg.type === 'thought',
+              'bi-gear-fill': msg.type === 'action',
+              'bi-check-circle-fill': msg.type === 'response',
+              'bi-exclamation-triangle-fill': msg.type === 'error'
+            }"></i>
+          </div>
+
+          <div class="message-bubble" [ngClass]="msg.type">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge" [ngClass]="{
+                'bg-primary': msg.type === 'user',
+                'bg-warning': msg.type === 'thought',
+                'bg-info': msg.type === 'action',
+                'bg-success': msg.type === 'response',
+                'bg-danger': msg.type === 'error'
+              }">{{ msg.type | titlecase }}</span>
+              <small class="text-muted">{{ msg.timestamp | date:'short' }}</small>
+            </div>
+            <div class="message-text" [innerHTML]="msg.content | nl2br"></div>
+          </div>
+
+        </div>
+      </div>
+      
+      <div *ngIf="isProcessing" class="text-center p-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mt-2">Agent is thinking...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer bg-white border-top">
+    <div class="input-group">
+      <input 
+        type="text" 
+        class="form-control form-control-lg"
+        [(ngModel)]="userInput" 
+        (keyup.enter)="sendMessage()"
+        placeholder="Ask me anything..."
+        [disabled]="isProcessing"
+      >
+      <button 
+        class="btn btn-primary btn-lg" 
+        (click)="sendMessage()" 
+        [disabled]="isProcessing || !userInput.trim()">
+        <i class="bi bi-send-fill"></i> Send
+      </button>
+    </div>
+  </div>
+</div>

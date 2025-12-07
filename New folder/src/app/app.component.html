@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      🦾 Agentic AI Demo
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeTab === 'tutorial'" (click)="setActiveTab('tutorial')" role="button">
+            <i class="bi bi-book"></i> Learn
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeTab === 'chat'" (click)="setActiveTab('chat')" role="button">
+            <i class="bi bi-chat-dots"></i> Try It
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="hero-section bg-dark text-white py-5">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold mb-3">🦾 Agentic AI Demonstration</h1>
+    <p class="lead">Experience the power of AI agents with real-time LLM integration</p>
+  </div>
+</div>
+
+<main class="container my-5">
+  <app-tutorial *ngIf="activeTab === 'tutorial'"></app-tutorial>
+  <app-chat *ngIf="activeTab === 'chat'"></app-chat>
+</main>
+
+<footer class="bg-dark text-white py-4 mt-5">
+  <div class="container text-center">
+    <p class="mb-2">Built with <i class="bi bi-heart-fill text-danger"></i> using Angular 18 & Bootstrap 5</p>
+    <p class="mb-0">
+      <a href="https://github.com/ritamsen21/ritam-agentic-ai-demo" target="_blank" class="text-white text-decoration-none">
+        <i class="bi bi-github"></i> View Source on GitHub
+      </a>
+    </p>
+  </div>
+</footer>

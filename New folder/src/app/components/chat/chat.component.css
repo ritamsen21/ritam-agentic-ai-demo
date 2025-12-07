@@ -1,0 +1,97 @@
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.messages-container {
+  height: 60vh;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+.message-row {
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.2s;
+}
+
+.message-row:hover {
+  background: #f1f3f5 !important;
+}
+
+.avatar-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.message-bubble {
+  flex: 1;
+  max-width: 85%;
+  padding: 15px;
+  margin: 0 15px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.message-bubble.user {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.message-bubble.user .badge {
+  background: rgba(255,255,255,0.3) !important;
+}
+
+.message-bubble.user .text-muted {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+.message-bubble.thought {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+}
+
+.message-bubble.action {
+  background: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+}
+
+.message-bubble.error {
+  background: #f8d7da;
+  border-left: 4px solid #dc3545;
+}
+
+.message-text {
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.card-footer {
+  padding: 1.25rem;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
